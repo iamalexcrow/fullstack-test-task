@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Инструкция по работе с тестовым заданием
 
-## Getting Started
+Данное тестовое задание не только помогает соискателям продемонстрировать свои знания и навыки программирования, но также даёт им представление о типовых задачах, которые решают full-stack разработчики в "Теплице социальных технологий".
 
-First, run the development server:
+При выполнении тестового задания рекомендуется активно использовать систему контроля версий `Git`.
 
-```bash
-npm run dev
-# or
-yarn dev
+## Основные задания
+
+1. Установить на локальную машину базу данных `sqlite3`
+2. Установить зависимости с помощью пакетного менеджера `npm`
+3. Используя sequelize-cli, установить миграции из папки `/migrations` (в папке `/database` должен появиться файл `data.db`)
+4. Используя sequelize-cli, установить демо-данные из папки `/seeders`
+5. Запустить проект к режиме разработки `npm run dev` (на главной странице должен появится список пользователей)
+6. Доработать и подключить `middleware/logger.ts` к api таким образом, чтобы при каждом http-запросе к api в файл `system.log` добавлялась строка следующего вида, например: [01.01.2022 23:59:59] GET /api/v1/users HTTP/1.1 (http-методы могут варьироваться в соответствии с подходом `REST`)
+7. Добавить файл `system.log` в исключения системы контроля версий `Git`
+8. Реализовать возможность сохранения изменений данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleSaveBtnClickCreator` в файле `components/home/HomeMain.tsx`
+9. Реализовать возможность удаления данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleDeleteBtnClickCreator` в файле `components/home/HomeMain.tsx`
+10. В комментариях над функцией `handleDeleteBtnClickCreator` ответить на вопрос, зачем здесь используется функия следующего вида: `(someVariable) => () => void`
+11. При нажатии на ссылку "Показать контакты" должно всплывать модальное окно с контактами пользователя; чтобы заработал данный функционал, найдите соответствующее место в приложении и подключите компоненты `components/ui/modal/UIModal.tsx` и `components/ui/modal/UIModal.context.tsx`
+12. В функции `handleContactsBtnClickCreator` в файле `components/home/HomeMain.tsx` заменить код `const userContacts = null;` на свой таким образом, чтобты в переменную `userContacts` загружались данные из `store` из массива `contacts`, отфильтрованные по `userId`; если в `store` нет данных о контактах данного пользователя, то загрузить их из базы и сохранить в `store`
+13. Логику, которая содержится в следующем фрагменте кода (в файле `components/home/HomeMain.tsx`), нужно переместить на сторону сервера (SSR); во время реализации при выборе между методами `getServerSideProps` и `getStaticProps` нужно иметь в виду, что данные **при каждом обращении** к странице должны быть синхронизированы с базой
+
+```
+  useEffect(() => {
+    dispatch(fetchUserList());
+  }, []);
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+14. В файле `components/home/HomeMain.tsx` реализована фейковая пагинация (кнопка "Показать ещё"); нужно сделать так, чтобы при первом обращении к странице на стороне сервера (SSR) загружались данные только тех пользователей, которые можно видеть сразу после загрузки страницы (не нажимая на кнопку "Показать ещё"); а при нажатии кнопки "Показать ещё" должны подгрузиться данные пользователей со следующей страницы и их нужно сохранить в `store` и отобразить ниже с списке.
+15. При подгрузке данных пользователей при нажатии на кнопку "Показать ещё" нужно реализовать искусственную задержку получения данных с сервера на 1 сек; во время ожидания загрузки данных нужно показать спиннер (шаблон спиннера закомментирован в файле `components/home/HomeMain.tsx`)
+16. В приложении при переходе на другую страницу необходимо показывать скелетон страницы (заглушку); найдите место в коде приложения, где можно подключить компонент скелетона и подключите его (сам компонент скелетона находится здесь - `components/ui/skeleton`)
+17. Сверстайте и подключите кастомную страницу 404; при вёрстке нельзя использовать ui-библиотеки типа `bootstrap`; для выравнивания и отбивки элементов используйте `grid`'ы (вертикальное и горизонтальное выравнивание - по центру); структура страницы должна быть следующей:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- 404
+- Страница не найдена
+- Вы можете вернуться на [главную страницу](/)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Дополнительные задания (по желанию)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+18. Подключить `store` к `localStorage`
+19. Написать unit-тест к любому react-компоненту с помощью библиотеки `Jest`
+20. Реализовать сортировку по любой из колонок в списке пользователей
 
-## Learn More
+### ВНИМАНИЕ!
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Если вы после получения тестового задания решили отказаться от его выполнения, пожалуйста, уведомите нас об этом; также просим вас уведомлять о любом изменении сроков выполенния задания (если сроки были заранее обговорены и установлены)
+- Если вы не сделали какой-то из пунктов Основных заданий, напишите это в сопроводительном письме; также укажите в письме задания, которые вы сделали из списка Дополнительных заданий (если таковые будут)
+- Вы также можете предложить и/или реализовать любой дополнительный функционал в рамках данного тестового задания (что именно и для чего нужен данный функционал - тоже нужно описать в сопроводительном письме)

@@ -1,0 +1,37 @@
+$color-white: #fff;
+$color-black: #000;
+$color-gray: #eee;
+
+@keyframes item-mock {
+  from {
+    background-color: $color-gray;
+  }
+  to {
+    background-color: rgba($color-gray, 0.35);
+  }
+}
+
+.item-mock {
+  will-change: background-color;
+  animation: 1s ease-out 0s infinite;
+  animation-name: item-mock;
+}
+
+.skeleton-main {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-gray;
+  margin: 2.5rem;
+  width: calc(100vw - 2.5rem * 2);
+  height: calc(100vh - 2.5rem * 2);
+  box-sizing: border-box;
+
+  @extend .item-mock;
+
+  &__content {
+    font-weight: 500;
+    font-size: 2.5rem;
+    color: $color-black;
+  }
+}
