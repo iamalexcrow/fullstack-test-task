@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    USERS_PER_PAGE: 6,
+    USERS_PER_PAGE: 5,
   },
   reactStrictMode: true,
 };
