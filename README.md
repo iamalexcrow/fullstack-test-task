@@ -6,13 +6,26 @@
 
 ## Основные задания
 
-1. [BACKEND] Установить на локальную машину базу данных `sqlite3`
+1. [BACKEND] Установить на локальную машину базу данных `sqlite3` 
+( В моем случае уже все было преустановлено, если же есть необходимость это сделать заново, то https://www.tutorialspoint.com/sqlite/sqlite_installation.htm лежат все инструкции) 
+
 2. [FRONTEND, BACKEND] Установить зависимости с помощью пакетного менеджера `npm`
+В корне проекта в консоли запускаем 'npm install'
+
 3. [BACKEND] Используя sequelize-cli, установить миграции из папки `/migrations` (в папке `/database` должен появиться файл `data.db`)
+npx sequelize-cli db:migrate
+
 4. [BACKEND] Используя sequelize-cli, установить демо-данные из папки `/seeders`
+npx sequelize-cli db:seed:all
+
 5. [FRONTEND, BACKEND] Запустить проект к режиме разработки `npm run dev` (на главной странице должен появится список пользователей)
+в корне проекта в терминале запускаем команду npm rundev
+
 6. [BACKEND] Доработать и подключить `middleware/logger.ts` к api таким образом, чтобы при каждом http-запросе к api в файл `system.log` добавлялась строка следующего вида, например: [01.01.2022 23:59:59] GET /api/v1/users HTTP/1.1 (http-методы могут варьироваться в соответствии с подходом `REST`)
+
+
 7. Добавить файл `system.log` в исключения системы контроля версий `Git`
+
 8. [BACKEND] Реализовать возможность сохранения изменений данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleSaveBtnClickCreator` в файле `components/home/HomeMain.tsx`
 9. [BACKEND] Реализовать возможность удаления данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleDeleteBtnClickCreator` в файле `components/home/HomeMain.tsx`
 10. [FRONTEND] В комментариях над функцией `handleDeleteBtnClickCreator` ответить на вопрос, зачем здесь используется функия следующего вида: `(someVariable) => () => void`
