@@ -25,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+system.log
 # local env files
 .env*.local
 
@@ -33,3 +34,5 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+
