@@ -25,7 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-system.log
+/system.log
 # local env files
 .env*.local
 
