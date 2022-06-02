@@ -1,0 +1,27 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 1fr 1fr;
+}
+
+.title {
+  justify-self: center;
+  font-size: 80px;
+}
+
+.subtitle {
+  justify-self: center;
+}
+
+.text {
+  justify-self: center;
+}
+
+.button {
+  cursor: pointer;
+  color: grey;
+  &:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+}

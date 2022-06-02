@@ -17,19 +17,29 @@ import styles from "./HomeMain.module.scss";
 import { IContact } from "../../store/models/contact/contact.typing";
 
 const HomeMain: React.FunctionComponent = (): ReactElement => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
-  const { dispatch: UIModalDispatch } = useContext(UIModalContext);
+  const {
+    dispatch: UIModalDispatch,
+    title: UITitle,
+    body: UIBody,
+  } = useContext(UIModalContext);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const users = useAppSelector((store) => store.homePage.users);
-
+  const contacts = useAppSelector((store) => store.homePage.contacts);
   // Should be moved to the server-side
   useEffect(() => {
     dispatch(fetchUserList());
   }, []);
 
   const handleMoreBtnClick = () => {
-    setCurrentPage((prevValue) => prevValue + 1);
+    setIsLoading(true);
+    function setPage() {
+      setCurrentPage((prevValue) => prevValue + 1);
+      setIsLoading(false);
+    }
+    setTimeout(setPage, 1000);
   };
 
   const handleSaveBtnClickCreator =
@@ -56,8 +66,15 @@ const HomeMain: React.FunctionComponent = (): ReactElement => {
 
       console.log("userId: ", userId);
 
+      // Перед нами HOF котрую мы исползуем для создания функции которая будет обрабатывать клик для конкретного поьзователя
+      // const handleClickForSpecificUser = handleDeleteBtnClickCreator(userID)
+      // в дальнейшем при обработке клика мы будем вызывать handleClickForSpecificUser
+      // Тело внутренней функции отсутствует, но судя по всему мы имеем дело с асинхронным запросом так как у нас есть async. Вангую что подтягиваем данные из sqlite3 или делаем запрос
+
       /* Should be implemented */
     };
+
+  const fetchDatafromDB = () => {};
 
   const handleContactsBtnClickCreator =
     (userId: typeof v4, userName: string) =>
@@ -65,7 +82,7 @@ const HomeMain: React.FunctionComponent = (): ReactElement => {
       event.preventDefault();
 
       // Should be replaced with your implementation
-      const userContacts = null;
+      const userContacts = contacts;
 
       if (UIModalDispatch) {
         const email = (userContacts as IContact | null)?.email ?? "[email]";
@@ -97,9 +114,7 @@ const HomeMain: React.FunctionComponent = (): ReactElement => {
   return (
     <>
       <PageTitle title="Список сотрудников" />
-
       <MainNav />
-
       <form ref={formRef}>
         <Table className={styles["home__user-list"]}>
           <thead>
@@ -184,30 +199,28 @@ const HomeMain: React.FunctionComponent = (): ReactElement => {
           </tbody>
         </Table>
       </form>
-      {/* 
-      
-      Spinner template 
 
-      <Stack
-        style={{ justifyContent: "center" }}
-        className="my-3"
-        direction="horizontal"
-      >
-        <Spinner animation="grow" role="status">
-          <span className="visually-hidden">
-            Загрузка данных пользователей...
-          </span>
-        </Spinner>
-      </Stack>
-      
-      */}
-      {(users?.length ?? 0) >
-        Number(process.env.USERS_PER_PAGE) * currentPage && (
-        <Stack className="mt-3" direction="vertical">
-          <Button variant="primary" onClick={handleMoreBtnClick}>
-            Показать ещё
-          </Button>
+      {isLoading ? (
+        <Stack
+          style={{ justifyContent: "center" }}
+          className="my-3"
+          direction="horizontal"
+        >
+          <Spinner animation="grow" role="status">
+            <span className="visually-hidden">
+              Загрузка данных пользователей...
+            </span>
+          </Spinner>
         </Stack>
+      ) : (
+        (users?.length ?? 0) >
+          Number(process.env.USERS_PER_PAGE) * currentPage && (
+          <Stack className="mt-3" direction="vertical">
+            <Button variant="primary" onClick={handleMoreBtnClick}>
+              Показать ещё
+            </Button>
+          </Stack>
+        )
       )}
     </>
   );

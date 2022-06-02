@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import MetaHead from "../layout/partials/meta-head/MetaHead";
 import Footer from "../layout/partials/footer/Footer";
 import styles from "./Main.module.scss";
+import UIModal from "../ui/modal/UIModal";
 
 const Main: React.FunctionComponent<{ children: ReactNode }> = ({
   children,
@@ -18,6 +19,7 @@ const Main: React.FunctionComponent<{ children: ReactNode }> = ({
 
         <Footer />
       </div>
+      <UIModal />
     </>
   );
 };

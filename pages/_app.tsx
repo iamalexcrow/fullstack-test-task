@@ -3,9 +3,11 @@ import "../styles/App.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import store from "../store/store";
+import store, { persistor } from "../store/store";
 import { Provider } from "react-redux";
 import UISkeleton from "../components/ui/skeleton/UISkeleton";
+import UIModalContextProvider from "../components/ui/modal/UIModal.context";
+import { PersistGate } from "redux-persist/integration/react";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -32,7 +34,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <Provider {...{ store }}>
-      <Component {...pageProps} />
+      <PersistGate loading={null} persistor={persistor}>
+        <UIModalContextProvider>
+          <Component {...pageProps} />
+        </UIModalContextProvider>
+      </PersistGate>
     </Provider>
   );
 };
