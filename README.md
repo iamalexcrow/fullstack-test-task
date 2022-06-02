@@ -27,10 +27,16 @@ npx sequelize-cli db:seed:all
 7. Добавить файл `system.log` в исключения системы контроля версий `Git`
 
 8. [BACKEND] Реализовать возможность сохранения изменений данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleSaveBtnClickCreator` в файле `components/home/HomeMain.tsx`
+
 9. [BACKEND] Реализовать возможность удаления данных пользователя (выбрать правильный, соответствующий подходу `REST`, http-метод): внести изменения в `pages/api/v1/users.ts`, `store/models/user`, а также доработать функцию `handleDeleteBtnClickCreator` в файле `components/home/HomeMain.tsx`
+
+
 10. [FRONTEND] В комментариях над функцией `handleDeleteBtnClickCreator` ответить на вопрос, зачем здесь используется функия следующего вида: `(someVariable) => () => void`
+
 11. [FRONTEND] При нажатии на ссылку "Показать контакты" должно всплывать модальное окно с контактами пользователя; чтобы заработал данный функционал, найдите соответствующее место в приложении и подключите компоненты `components/ui/modal/UIModal.tsx` и `components/ui/modal/UIModal.context.tsx`
+
 12. [FRONTEND] В функции `handleContactsBtnClickCreator` в файле `components/home/HomeMain.tsx` заменить код `const userContacts = null;` на свой таким образом, чтобты в переменную `userContacts` загружались данные из `store` из массива `contacts`, отфильтрованные по `userId`; если в `store` нет данных о контактах данного пользователя, то загрузить их из базы и сохранить в `store`
+
 13. [FRONTEND, BACKEND-FOR-FRONTEND] Логику, которая содержится в следующем фрагменте кода (в файле `components/home/HomeMain.tsx`), нужно переместить на сторону сервера (SSR); во время реализации при выборе между методами `getServerSideProps` и `getStaticProps` нужно иметь в виду, что данные **при каждом обращении** к странице должны быть синхронизированы с базой
 
 ```
